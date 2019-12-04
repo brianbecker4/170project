@@ -2,6 +2,29 @@ import networkx as nx
 import numpy as np
 
 
+"""
+prune leaves from graph
+"""
+def prune_leaf(adjacency_matrix, list_of_homes, list_of_locations):
+    new = adjacency_matrix
+    for x in range(0,len(adjacency_matrix)):
+        is_empty = True
+        is_leaf = True
+        is_prune = False
+        for y in adjacency_matrix[x]:
+            if y != 'x' and is_empty == False:
+                is_leaf = False
+            if y != 'x':
+                is_empty = False
+        if is_leaf:
+            if list_of_locations[x] not in list_of_homes:
+                is_prune = True
+        if is_empty:
+            is_prune = True
+        if is_prune:
+            new[x] = [0] * len(adjacency)
+    return new
+
 def decimal_digits_check(number):
     number = str(number)
     parts = number.split('.')
