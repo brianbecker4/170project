@@ -39,6 +39,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     donk = greedy.solve_tsp(adjacency_matrix)
     gonk = donk + list(reversed(donk[:-1]))
     print(gonk)
+
     # print(adjacency_matrix)
     # #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
     # #print(boy)
@@ -46,7 +47,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # print(adjacency_matrix)
     # g = tspdp.TSP(adjacency_matrix, list_of_locations)
     # path = g.main()
-    pass
+    return gonk, gonk
 
 """
 ======================================================================
