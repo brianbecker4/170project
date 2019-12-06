@@ -4,7 +4,8 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
-
+import MSTgraph
+import tspdp
 from student_utils import *
 
 """
@@ -26,8 +27,19 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
-    boy = prune_leaf(adjacency_matrix, list_of_homes, list_of_locations)
-    print(boy)
+    # g = MSTgraph.Graph(len(adjacency_matrix))
+    # g.graph = adjacency_matrix
+    # g.primMST()
+    print(adjacency_matrix)
+    #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
+    #print(boy)
+    for x in range(0,len(adjacency_matrix)):
+        for y in range(0,len(adjacency_matrix)):
+            if adjacency_matrix[x][y] == 'x':
+                adjacency_matrix[x][y] = 0
+    print(adjacency_matrix)
+    g = tspdp.TSP(adjacency_matrix, list_of_locations)
+    path = g.main()
     pass
 
 """

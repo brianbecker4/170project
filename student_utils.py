@@ -22,8 +22,35 @@ def prune_leaf(adjacency_matrix, list_of_homes, list_of_locations):
         if is_empty:
             is_prune = True
         if is_prune:
-            new[x] = [0] * len(adjacency)
+            new[x] = [0] * len(adjacency_matrix)
     return new
+"""preprocess"""
+def preProcess(adjacency_matrix, list_of_homes, list_of_locations):
+    newMatrix = prune_leaf(adjacency_matrix, list_of_homes, list_of_locations)
+
+    arr_of_ones = np.apply_along_axis(check_if_zero, 1, newMatrix)
+    combine_dict = {}
+    for x in arr_of_ones:
+        count_of_index_changes = 0
+        if x == 1:
+            # delete row
+            deleted_row_matrix = np.delete(newMatrix, x, 0)
+            deleted_col_matrix = np.delete(deleted_row_matrix, x, 1)
+            count_of_index_changes -= 1
+
+            # merge with previous
+            to_merge_loc = list_of_locations[x + count_of_index_changes]
+            to_merge_to_loc = list_of_locations[x - 1 + count_of_index_changes]
+            combine_dict[to_merge_to_loc] = to_merge_loc
+    return deleted_col_matrix
+
+
+def check_if_zero(arr):
+    count = 0
+    for x in range(len(arr)):
+        if arr[x] != 0:
+            count += 1
+    return count
 
 def decimal_digits_check(number):
     number = str(number)
