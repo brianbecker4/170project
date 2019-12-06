@@ -6,6 +6,7 @@ import argparse
 import utils
 import MSTgraph
 import tspdp
+import greedy
 from student_utils import *
 
 """
@@ -30,16 +31,21 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # g = MSTgraph.Graph(len(adjacency_matrix))
     # g.graph = adjacency_matrix
     # g.primMST()
-    print(adjacency_matrix)
-    #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
-    #print(boy)
+    #basic_greedy()
     for x in range(0,len(adjacency_matrix)):
         for y in range(0,len(adjacency_matrix)):
             if adjacency_matrix[x][y] == 'x':
                 adjacency_matrix[x][y] = 0
-    print(adjacency_matrix)
-    g = tspdp.TSP(adjacency_matrix, list_of_locations)
-    path = g.main()
+    donk = greedy.solve_tsp(adjacency_matrix)
+    gonk = donk + list(reversed(donk[:-1]))
+    print(gonk)
+    # print(adjacency_matrix)
+    # #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
+    # #print(boy)
+
+    # print(adjacency_matrix)
+    # g = tspdp.TSP(adjacency_matrix, list_of_locations)
+    # path = g.main()
     pass
 
 """

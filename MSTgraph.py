@@ -33,7 +33,7 @@ class Graph():
 
         # Initilaize min value
         min = sys.maxsize
-
+        min_index = 0
         for v in range(self.V):
             if key[v] < min and mstSet[v] == False:
                 min = key[v]
@@ -76,4 +76,4 @@ class Graph():
                         key[v] = self.graph[u][v]
                         parent[v] = u
         self.printMST(parent)
-        print(self.newGraph)
+        #print(self.newGraph)
