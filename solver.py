@@ -32,14 +32,50 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # g.graph = adjacency_matrix
     # g.primMST()
     #basic_greedy()
+    adjlen = len(adjacency_matrix)
     for x in range(0,len(adjacency_matrix)):
         for y in range(0,len(adjacency_matrix)):
             if adjacency_matrix[x][y] == 'x':
-                adjacency_matrix[x][y] = 0
+                adjacency_matrix[x][y] = float("inf")
+    #------
+    # scout = 0
+    # removelist = []
+    # copy = []
+    # temp = []
+    # while scout < adjlen:
+    #     if adjacency_matrix[scout].count(float("inf")) == len(adjacency_matrix):
+    #         removelist.append(scout)
+    #     scout += 1
+    # point = 0
+    # scout = 0
+    #
+    # while scout < adjlen and point < len(removelist):
+    #     if scout == removelist[point]:
+    #         point += 1
+    #         for x in range(0,adjlen):
+    #             if x != scout:
+    #                 for y in range(0,len(adjacency_matrix)):
+    #                     if y != scout:
+    #                         temp.append(adjacency_matrix[x][y])
+    #                 copy.append(temp)
+    #                 temp = []
+    #     else:
+    #         temp.append(adja)
+    #     scout += 1
+    #
+    # print(len(copy))
+    # print(len(adjacency_matrix))
     donk = greedy.solve_tsp(adjacency_matrix)
-    gonk = donk + list(reversed(donk[:-1]))
-    print(gonk)
+    #-----
+    print(donk)
 
+
+    gonk = donk + list(reversed(donk[:-1]))
+    val = donk.index(list_of_locations.index(starting_car_location))
+    donk1 = donk[:val+1]
+    donk2 = donk[val:]
+    donk = list(reversed(donk1[1:])) + donk + list(reversed(donk2[:-1]))
+    print(donk)
     # print(adjacency_matrix)
     # #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
     # #print(boy)
@@ -47,7 +83,17 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # print(adjacency_matrix)
     # g = tspdp.TSP(adjacency_matrix, list_of_locations)
     # path = g.main()
-    return gonk, gonk
+
+    my_dict = {}
+    for x in list_of_homes:
+    	my_dict[list_of_locations.index(x)] = [list_of_locations.index(x)]
+    print(my_dict)
+    print(donk)
+    print(list_of_locations.index(starting_car_location))
+    print(val)
+    #gonk.index(list_of_locations.index(starting_car_location))
+    return donk, my_dict
+
 
 """
 ======================================================================
