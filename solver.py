@@ -33,41 +33,44 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # g.primMST()
     #basic_greedy()
     adjlen = len(adjacency_matrix)
+
+
+    for x in range(0, len(adjacency_matrix)):
+    	for y in range(0, len(adjacency_matrix)):
+    		if adjacency_matrix[x][y] == 'x':
+    			adjacency_matrix[x][y] = 0
+
+    print(adjacency_matrix)
+    arr_of_ones = np.apply_along_axis(check_if_zero, 1, adjacency_matrix)
+    print(arr_of_ones)
+    deleted_colandrow_matrix = adjacency_matrix
+    count = 0
+    removed_count = 0
+    removed_list = []
+    for i in arr_of_ones:
+        if i == 0:
+            deleted_row_matrix = np.delete(adjacency_matrix, count - removed_count, 0)
+            deleted_colandrow_matrix = np.delete(deleted_row_matrix, count - removed_count, 1)
+            print(deleted_colandrow_matrix)
+
+            removed_list.append(count)
+            removed_count += 1
+        count += 1
+        adjacency_matrix = deleted_colandrow_matrix
+    print(len(adjacency_matrix))
+    print("removed list", removed_list)
+
     for x in range(0,len(adjacency_matrix)):
         for y in range(0,len(adjacency_matrix)):
-            if adjacency_matrix[x][y] == 'x':
+            if adjacency_matrix[x][y] == 0:
                 adjacency_matrix[x][y] = float("inf")
-    #------
-    # scout = 0
-    # removelist = []
-    # copy = []
-    # temp = []
-    # while scout < adjlen:
-    #     if adjacency_matrix[scout].count(float("inf")) == len(adjacency_matrix):
-    #         removelist.append(scout)
-    #     scout += 1
-    # point = 0
-    # scout = 0
-    #
-    # while scout < adjlen and point < len(removelist):
-    #     if scout == removelist[point]:
-    #         point += 1
-    #         for x in range(0,adjlen):
-    #             if x != scout:
-    #                 for y in range(0,len(adjacency_matrix)):
-    #                     if y != scout:
-    #                         temp.append(adjacency_matrix[x][y])
-    #                 copy.append(temp)
-    #                 temp = []
-    #     else:
-    #         temp.append(adja)
-    #     scout += 1
-    #
-    # print(len(copy))
-    # print(len(adjacency_matrix))
+
     donk = greedy.solve_tsp(adjacency_matrix)
-    #-----
-    print(donk)
+    for y in removed_list:
+        for x in range(len(donk)):
+            if donk[x] >= y:
+                donk[x] = donk[x] + 1
+    #print(donk)
 
 
     gonk = donk + list(reversed(donk[:-1]))
@@ -75,7 +78,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     donk1 = donk[:val+1]
     donk2 = donk[val:]
     donk = list(reversed(donk1[1:])) + donk + list(reversed(donk2[:-1]))
-    print(donk)
+    #print(donk)
     # print(adjacency_matrix)
     # #boy = preProcess(adjacency_matrix, list_of_homes, list_of_locations)
     # #print(boy)
